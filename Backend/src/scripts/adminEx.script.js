@@ -9,7 +9,7 @@ export const createAdmin = asyncHandler(async (req, res) => {
     });
     if (!existingAdmin) {
       const createdNewAdmin = new User({
-        firstName: "muneeba",
+        firstName: "muhammad",
         lastName: "Zeeshan",
         email: "admin@gmail.com",
         phoneNumber: "037452865",

@@ -5,9 +5,10 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 const addEmployee = asyncHandler(async (req, res) => {
   console.log("req.body", req.body);
-  const { firstname, lastName, email, phoneNumber, category,location } = req.body;
+  const { firstname, lastName, email, phoneNumber, category, address } =
+    req.body;
   if (
-    [firstname, lastName, email, phoneNumber, category, location].some(
+    [firstname, lastName, email, phoneNumber, category, address].some(
       (field) => field?.trim() === ""
     )
   ) {
@@ -19,7 +20,7 @@ const addEmployee = asyncHandler(async (req, res) => {
     email,
     phoneNumber,
     category,
-    location
+    address,
   });
   return res
     .status(201)
@@ -41,9 +42,10 @@ const readallEmployee = async (req, res) => {
     );
 };
 const updateEmployee = async (req, res) => {
-  const { firstname, lastName, email, phoneNumber, category,location } = req.body;
+  const { firstname, lastName, email, phoneNumber, category, address } =
+    req.body;
   if (
-    [ lastName, email, phoneNumber, category, firstname,location].some(
+    [lastName, email, phoneNumber, category, firstname, address].some(
       (field) => field?.trim() === ""
     )
   ) {
@@ -66,8 +68,8 @@ const updateEmployee = async (req, res) => {
 const deleteEmployee = async (req, res) => {
   const id = req.params.id;
   const deleteEmployee = await Employee.findByIdAndDelete({ _id: id });
-  console.log("deleteEmployee",deleteEmployee);
-  
+  console.log("deleteEmployee", deleteEmployee);
+
   return res
     .status(201)
     .json(

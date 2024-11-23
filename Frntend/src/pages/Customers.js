@@ -142,7 +142,7 @@ const Customers = () => {
             }}
             onClick={() => handleBlockUnblock(record._id)}
           >
-            {record.action ? "UnBlock" : "Blocked"}
+            {record.action ? "UnBlock" : "Block"}
           </Button>
         </Space>
       ),
