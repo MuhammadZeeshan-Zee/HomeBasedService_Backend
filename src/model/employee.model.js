@@ -21,7 +21,7 @@ const employeeSchema = new Schema(
       type: String,
       require: true,
     },
-    location:{
+    address:{
       type:String,
       require:true
     },
