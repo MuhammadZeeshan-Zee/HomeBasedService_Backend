@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 const app = express();
 const corsOptions = {
-    origin: ['https://home-based-service-frontend.vercel.app/?vercelToolbarCode=-AqSNH30uBjh2zh', 'http://localhost:3000'], // Allow deployed frontend and localhost (for testing)
+    origin: ['https://home-based-service-frontend.vercel.app', 'http://localhost:3000'], // Allow deployed frontend and localhost (for testing)
     credentials: true, // If you need to send cookies or auth headers
   };
   

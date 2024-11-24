@@ -1,1 +1,1 @@
-export const API_URL='https://home-based-service.vercel.app/'
+export const API_URL='https://home-based-service.vercel.app'

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { message } from 'antd';  
+import { API_URL } from '../../config';
 
 const Register = () => {
   const [registerData, setRegistrationData] = useState({
@@ -49,7 +50,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/user/register', registerData);
+      const response = await axios.post('https://home-based-service.vercel.app/user/register', registerData,{ withCredentials: true});
       console.log("response", response);
       
       if (response.status === 201) {
