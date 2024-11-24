@@ -19,7 +19,7 @@ const addEmployee = asyncHandler(async (req, res) => {
     email,
     phoneNumber,
     category,
-    location
+    address,
   });
   return res
     .status(201)

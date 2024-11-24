@@ -5,13 +5,13 @@ import bcrypt from "bcrypt";
 export const createAdmin = asyncHandler(async (req, res) => {
   try {
     const existingAdmin = await User.findOne({
-      email: "admin@gmail.com",
+      email: "admin123@gmail.com",
     });
     if (!existingAdmin) {
       const createdNewAdmin = new User({
         firstName: "muneeba",
         lastName: "Zeeshan",
-        email: "admin@gmail.com",
+        email: "admin123@gmail.com",
         phoneNumber: "037452865",
         password: "Admin*123",
         role: "admin",
