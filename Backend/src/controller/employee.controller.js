@@ -14,6 +14,9 @@ const addEmployee = asyncHandler(async (req, res) => {
   ) {
     throw new ApiError(400, "All fields are required");
   }
+  const extistedSame =await Employee.find({email,category});
+  console.log("extistedSame",extistedSame);
+  
   const employee = await Employee.create({
     firstname,
     lastName,
