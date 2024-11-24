@@ -25,7 +25,17 @@ const employeeSchema = new Schema(
       type:String,
       require:true
     },
-  
+    assign:{
+      type:Boolean,
+      default:false,
+      requrired:true
+    },
+    orderList: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Book",
+      },
+    ],
   },
   { timestamps: true }
 );
