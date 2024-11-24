@@ -6,7 +6,7 @@ import UserContext from "../Context/UserContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "../../features/auth/authSlice";
-import Cookies from "js-cookie";
+
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
