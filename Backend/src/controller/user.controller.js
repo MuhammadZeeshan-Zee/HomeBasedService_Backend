@@ -396,12 +396,15 @@ const getAllUsers = asyncHandler(async (req, res) => {
   if (!users.length) {
     throw new ApiError(400, "Users not not enough to fectch");
   }
+  const filterUser=users.filter((user) => user.role !== "admin")
+  console.log("filterUser",filterUser);
+  
   return res
     .status(200)
     .json(
       new ApiResponse(
         200,
-        { users, count: users.length },
+        { filterUser, count: users.filter((user) => user.role !== "admin").length },
         "All Users retrieved successfully"
       )
     );

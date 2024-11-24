@@ -25,7 +25,7 @@ const Customers = () => {
       );
 
       // Initialize customers with the existing action field
-      const usersWithStatus = response.data.data.users.map((user) => ({
+      const usersWithStatus = response.data.data.filterUser.map((user) => ({
         ...user,
       }));
 
