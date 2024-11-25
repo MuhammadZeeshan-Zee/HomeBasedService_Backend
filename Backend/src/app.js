@@ -9,7 +9,7 @@ const corsOptions = {
     "http://localhost:3000",
     "http://localhost:3001",
   ], // Allow specific origins
-  credentials: true, // If you're using cookies or auth headers
+  credentials: true,
 };
 // app.use(cors({
 //     origin:  process.env.ORIGIN, // Allow deployed frontend and localhost (for testing)
