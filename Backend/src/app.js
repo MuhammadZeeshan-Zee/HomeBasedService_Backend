@@ -4,7 +4,11 @@ import cors from "cors";
 const app = express();
 
 const corsOptions = {
-  origin: ["https://your-frontend-domain.com", "http://localhost:3000"], // Allow specific origins
+  origin: [
+    "https://home-based-service-frontend.vercel.app/",
+    "http://localhost:3000",
+    "http://localhost:3001",
+  ], // Allow specific origins
   credentials: true, // If you're using cookies or auth headers
 };
 // app.use(cors({
