@@ -42,72 +42,9 @@ function Ourcleaning() {
           </p>
         </div>
 
-        <div className="mt-10 w-full px-4">
-          <div className="flex flex-wrap justify-center">
-            {[
-              {
-                img: "./images/Card1.jpg",
-                title: "House Cleaning Service",
-                description:
-                  "Weekly, Bi-weekly, monthly professional house  service for your house or apartment.",
-              },
-              {
-                img: "./images/Card2.jpg",
-                title: "Electrician Service",
-                description:
-                  "Our deep service is a great place to start before opting for a  service.",
-              },
-              {
-                img: "./images/Card3.jpg",
-                title: "Paint Services",
-                description:
-                  "Whether you're moving into a new place or moving out of one, we'll be there to Service your space.",
-              },
-              {
-                img: "./images/Card4.jpg",
-                title: "Plumber Services",
-                description:
-                  "Let's make sure vacation rental guests are always greeted with a fresh clean home.",
-              },
-              {
-                img: "./images/Card5.jpg",
-                title: "AC/Fridge Services",
-                description:
-                  "Let's make your office maintenance and inviting for your hard-working employees.",
-              },
-              {
-                img: "./images/Card6.jpg",
-                title: "Carpet Cleaning Services",
-                description:
-                  "Top-notch professional commercial  services in & around the Bay Area.",
-              },
-            ].map((card, index) => (
-              <div className="w-full md:w-1/3 p-4" key={index}>
-                <div className="flex flex-col h-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md mx-auto">
-                  <img
-                    src={card.img}
-                    className="w-full rounded-t-lg"
-                    alt="Card"
-                  />
-                  <div className="p-4 flex flex-col flex-grow">
-                    <h5 className="text-lg font-medium text-[1.4rem] text-neutral-800">
-                      {card.title}
-                    </h5>
-                    <p className="text-neutral-400 leading-custom mt-4 mb-2 flex-grow">
-                      {card.description}
-                    </p>
-                    <Link to="/book">
-                      <button className="bg-transparent text-[#ED5521] font-bold py-2 px-4 rounded mt-2 border">
-                        Book Now
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      m 
 
+        
         <div className="text-center mt-16">
           <p className="text-[#ED5521]">FEATURED</p>
           <h1 className="text-[40px] md:text-[50px] font-bold text-neutral-800">
