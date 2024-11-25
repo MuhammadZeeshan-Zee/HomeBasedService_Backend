@@ -7,7 +7,7 @@ const corsOptions = {
     credentials: true, // If you need to send cookies or auth headers
   };
   
-app.use('*',cors(corsOptions)); //request is vailed from which origin
+app.use(cors(corsOptions)); //request is vailed from which origin
 app.use(express.json({ limit: "16kb" })); //to get data in json and also give the data limit
 app.use(express.urlencoded({ extended: true, limit: "16kb" })); //to get data from url and also give the data limit
 app.use(express.static("public")); //serve static assets, this data can access everyone
