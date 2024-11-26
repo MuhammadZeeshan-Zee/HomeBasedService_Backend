@@ -30,6 +30,7 @@ import MainLayout from './components/MainLayout';
 import Orders from './pages/Orders';
 import Customers from './pages/Customers';
 import Employees from './pages/Employees';
+import ManageServices from './pages/ManageServices';
 import UserContextProvider from './components/Context/UserContextProvider';
 import PrivateRoute from './components/PrivateRoute';
 import { Provider } from 'react-redux';
@@ -81,6 +82,7 @@ function App() {
                   <Route path="Orders" element={<Orders />} />
                   <Route path="customers" element={<Customers />} />
                   <Route path="Employees" element={<Employees />} />
+                  <Route path="ManageServices" element={<ManageServices />} />
                 </Route>
               </Routes>
             </BrowserRouter>

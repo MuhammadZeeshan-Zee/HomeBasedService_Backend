@@ -103,9 +103,7 @@ const Employees = () => {
   };
 
   const getHighlightedText = (text, highlight) => {
-    if (!text) return ''; // Return an empty string if text is undefined or null
-    if (!highlight) return text; // Return text as is if there's no highlight
-  
+    if (!highlight) return text;
     const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
     return parts.map((part, index) =>
       part.toLowerCase() === highlight.toLowerCase() ? (
@@ -117,7 +115,6 @@ const Employees = () => {
       )
     );
   };
-  
 
   const filteredData = employees.filter((employee) =>
     ['firstname', 'lastName', 'email', 'phoneNumber']
