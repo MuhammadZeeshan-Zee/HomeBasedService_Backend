@@ -25,9 +25,11 @@ import UserRoute from "./route/user.route.js";
 import BookRoute from "./route/book.route.js";
 import EmployeeRoute from "./route/employee.route.js";
 import { createAdmin } from "./scripts/adminEx.script.js";
+import ServiceRoute from './route/service.route.js'
 //declaration routes
 createAdmin();
 app.use("/user", UserRoute);
 app.use("/user", BookRoute);
 app.use("/employee", EmployeeRoute);
+app.use("/service", ServiceRoute);
 export { app };
