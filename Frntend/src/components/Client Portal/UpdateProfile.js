@@ -19,7 +19,7 @@ function UpdateProfile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/user/getCurrentUser', {
+        const res = await axios.get('https://home-based-service.vercel.app/user/getCurrentUser', {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("res", res);
@@ -36,7 +36,7 @@ function UpdateProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/user/updateUserDetails', {
+      const response = await axios.post('https://home-based-service.vercel.app/user/updateUserDetails', {
         firstName,
         lastName,
         phoneNumber,

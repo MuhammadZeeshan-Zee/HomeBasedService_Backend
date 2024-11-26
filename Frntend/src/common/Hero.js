@@ -37,7 +37,6 @@ const [userProfile, setUserProfile] = useState({
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const navigate = useNavigate();
   const handleLogout = () => {
-    // dispatch(removeUserInfo());
     localStorage.clear();
     navigate('/');
   };
@@ -54,7 +53,7 @@ const [userProfile, setUserProfile] = useState({
   console.log('uservalue', user);
   const getUserDeatils=async()=>{
     const res = await axios.get(
-      "http://localhost:4000/user/getCurrentUser",
+      "https://home-based-service.vercel.app/user/getCurrentUser",
       {
         headers: { Authorization: `Bearer ${token}` },
       }

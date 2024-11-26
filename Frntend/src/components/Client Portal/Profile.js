@@ -22,7 +22,7 @@ const UserProfile = () => {
     const fetchUserProfile = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:4000/user/getCurrentUser",
+          "https://home-based-service.vercel.app/user/getCurrentUser",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -45,7 +45,7 @@ const UserProfile = () => {
 
       try {
         const { data } = await axios.post(
-          "http://localhost:4000/user/updateAvatar",
+          "https://home-based-service.vercel.app/user/updateAvatar",
           formData,
           {
             headers: { Authorization: `Bearer ${token}` },
