@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Select, Input, message } from "antd";
 import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { text } from "@fortawesome/fontawesome-svg-core";
+
 
 const { Option } = Select;
 const { Search } = Input;
@@ -23,7 +23,7 @@ const Orders = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/user/getAllOrders",
+          "https://home-based-service.vercel.app/user/getAllOrders",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -92,7 +92,7 @@ const Orders = () => {
 
     try {
       await axios.put(
-        `http://localhost:4000/user/updateOrderStatus/${key}`,
+        `https://home-based-service.vercel.app/user/updateOrderStatus/${key}`,
         {
           status: value,
         },

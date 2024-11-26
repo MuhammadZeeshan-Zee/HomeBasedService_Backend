@@ -17,7 +17,7 @@ const ForgetPassword = () => {
     setMessage('');
 
     try {
-      await axios.post('http://localhost:4000/user/forgotPassword', { email });
+      await axios.post('https://home-based-service.vercel.app/user/forgotPassword', { email });
       setMessage('Verification email sent successfully.');
 
       // Store the email in localStorage

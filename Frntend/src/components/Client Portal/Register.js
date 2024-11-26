@@ -50,7 +50,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(`${API_URL}/user/register`, registerData,{ withCredentials: true});
+      const response = await axios.post('https://home-based-service.vercel.app/user/register', registerData);
       console.log("response", response);
       
       if (response.status === 201) {

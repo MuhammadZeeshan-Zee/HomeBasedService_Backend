@@ -35,7 +35,7 @@ const Verify = () => {
     const verificationCode = code.join('');
 
     try {
-      const response = await fetch('http://localhost:4000/user/verifyOTP', {
+      const response = await fetch('https://home-based-service.vercel.app/user/verifyOTP', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

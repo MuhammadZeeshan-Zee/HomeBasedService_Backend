@@ -43,7 +43,7 @@ const Dashboard = () => {
   const getData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/user/getAllOrders",
+        "https://home-based-service.vercel.app/user/getAllOrders",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -52,7 +52,7 @@ const Dashboard = () => {
       console.log("response.data.data.count", response.data.data.count);
 
       const dataGet = await axios.get(
-        "http://localhost:4000/employee/employeeCount",
+        "https://home-based-service.vercel.app/employee/employeeCount",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -60,7 +60,7 @@ const Dashboard = () => {
       console.log("dataGet", dataGet);
 
       const customerResposne = await axios.get(
-        "http://localhost:4000/user/getAllUsers",
+        "https://home-based-service.vercel.app/user/getAllUsers",
         {
           headers: { Authorization: `Bearer ${token}` },
         }

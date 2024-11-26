@@ -7,7 +7,6 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "../../features/auth/authSlice";
 
-import { API_URL } from "../../config";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -48,16 +47,10 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        `${API_URL}/user/login`,
-        {
-          email: loginData.email,
-          password: loginData.password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post("https://home-based-service.vercel.app/user/login", {
+        email: loginData.email,
+        password: loginData.password,
+      });
       setLoading(false);
       console.log("response.data.data.user.role", response.data.data.user.role);
       if (response.data.data.user.action === true) {
