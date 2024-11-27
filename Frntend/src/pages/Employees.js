@@ -23,7 +23,7 @@ const Employees = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/employee/readallEmployee', {
+      const response = await axios.get('https://home-based-service.vercel.app/employee/readallEmployee', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEmployees(Array.isArray(response.data.data) ? response.data.data : []);
@@ -35,7 +35,7 @@ const Employees = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/employee/deleteEmployee/${id}`, {
+      await axios.delete(`https://home-based-service.vercel.app/employee/deleteEmployee/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       message.success('Employee deleted successfully');
@@ -69,7 +69,7 @@ const Employees = () => {
       if (editingEmployee) {
         try {
           await axios.put(
-            `http://localhost:4000/employee/updateEmployee/${editingEmployee._id}`,
+            `https://home-based-service.vercel.app/employee/updateEmployee/${editingEmployee._id}`,
             values,
             {
               headers: { Authorization: `Bearer ${token}` },
@@ -82,7 +82,7 @@ const Employees = () => {
         }
       } else {
         try {
-          await axios.post('http://localhost:4000/employee/addEmployee', values, {
+          await axios.post('https://home-based-service.vercel.app/employee/addEmployee', values, {
             headers: { Authorization: `Bearer ${token}` },
           });
           message.success('Employee added successfully');
