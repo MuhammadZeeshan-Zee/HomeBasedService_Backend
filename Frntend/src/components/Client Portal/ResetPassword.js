@@ -21,7 +21,7 @@ const ResetPassword = () => {
         }
 
         try {
-            const response = await axios.post('https://home-based-service.vercel.app/user/resetPassword', { email, newPassword:password });
+            await axios.post('https://home-based-service.vercel.app/user/resetPassword', { email, newPassword:password });
             setSuccess('Password reset successfully!');
             setError('');
             localStorage.removeItem('forgotPasswordEmail'); // Clear email from local storage

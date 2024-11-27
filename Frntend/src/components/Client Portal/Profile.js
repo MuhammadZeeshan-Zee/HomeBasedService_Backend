@@ -46,7 +46,6 @@ const UserProfile = () => {
 
       try {
         const { data } = await axios.post(
-          // shani
           "https://home-based-service.vercel.app/user/updateAvatar",
           formData,
           {

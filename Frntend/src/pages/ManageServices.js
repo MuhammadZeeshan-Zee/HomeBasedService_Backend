@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Space, Modal, Form, Input, message } from 'antd';
 import axios from 'axios';
+import { Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 
@@ -19,21 +21,21 @@ const ManageServices = () => {
 
     const fetchServices = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/service/readallServices', {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setServices(Array.isArray(response.data.data) ? response.data.data : []);
+            const response = await axios.get('http://localhost:4000/service/readAllService');
+            const servicesData = Array.isArray(response.data.data.services)
+                ? response.data.data.services
+                : [];
+            setServices(servicesData);
         } catch (error) {
             console.error('Error fetching services:', error);
             message.error('Failed to fetch services.');
         }
     };
 
+
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:4000/service/deleteService/${id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            await axios.delete(`http://localhost:4000/service/deleteService/${id}`);
             message.success('Service deleted successfully');
             fetchServices();
         } catch (error) {
@@ -59,23 +61,30 @@ const ManageServices = () => {
         setModalState({ isVisible: false, editingService: null });
         form.resetFields();
     };
-
     const handleSave = () => {
         form.validateFields().then(async (values) => {
             const { editingService } = modalState;
 
+            // Create FormData and append fields
+            const formData = new FormData();
+            formData.append('name', values.name);
+            formData.append('description', values.description);
+
+            // Append the image file if provided
+            if (values.image) {
+                formData.append('image', values.image.originFileObj);
+            }
+
             try {
                 if (editingService) {
+                    // Update service API call
                     await axios.put(
                         `http://localhost:4000/service/updateService/${editingService._id}`,
-                        values,
-                        { headers: { Authorization: `Bearer ${token}` } }
-                    );
+                        formData);
                     message.success('Service updated successfully');
                 } else {
-                    await axios.post('http://localhost:4000/service/addService', values, {
-                        headers: { Authorization: `Bearer ${token}` },
-                    });
+                    // Add service API call
+                    await axios.post('http://localhost:4000/service/addService',formData);
                     message.success('Service added successfully');
                 }
                 fetchServices();
@@ -86,6 +95,8 @@ const ManageServices = () => {
             }
         });
     };
+
+
 
     const getHighlightedText = (text, highlight) => {
         if (!highlight) return text;
@@ -99,11 +110,14 @@ const ManageServices = () => {
         );
     };
 
-    const filteredServices = services.filter((service) =>
-        ['name', 'description'].some((key) =>
-            (service[key] || '').toLowerCase().includes(searchText.toLowerCase())
+    const filteredServices = Array.isArray(services)
+        ? services.filter((service) =>
+            ['name', 'description'].some((key) =>
+                (service[key] || '').toLowerCase().includes(searchText.toLowerCase())
+            )
         )
-    );
+        : [];
+
 
     const columns = [
         {
@@ -122,7 +136,12 @@ const ManageServices = () => {
             title: 'Image',
             dataIndex: 'image',
             key: 'image',
-            render: (text) => (text ? <img src={text} alt="Service" style={{ width: '50px' }} /> : 'No Image'),
+            render: (text) =>
+                text ? (
+                    <img src={text} alt="Service" style={{ width: '50px', borderRadius: '5px' }} />
+                ) : (
+                    'No Image'
+                ),
         },
         {
             title: 'Action',
@@ -153,10 +172,9 @@ const ManageServices = () => {
 
             <Table
                 columns={columns}
-                dataSource={filteredServices}
+                dataSource={filteredServices} // Use filteredServices if filtering is implemented
                 pagination={{ pageSize: 10 }}
                 rowKey="_id"
-                className="bg-white"
             />
 
             <Modal
@@ -170,8 +188,8 @@ const ManageServices = () => {
                     <Button key="submit" type="primary" onClick={handleSave}>
                         {modalState.editingService ? 'Update' : 'Add'}
                     </Button>,
-                ]}
-            >
+                ]}>
+                
                 <Form form={form} layout="vertical">
                     <Form.Item
                         name="name"
@@ -190,11 +208,27 @@ const ManageServices = () => {
                     <Form.Item
                         name="image"
                         label="Image"
+                        valuePropName="file"
+                        getValueFromEvent={(e) => {
+                            // Ensure we extract the correct file object from the event
+                            if (e && e.fileList) {
+                                return e.fileList[0]; // Return the first file in the list
+                            }
+                            return null;
+                        }}
                         rules={[{ required: true, message: 'Please upload an image!' }]}
                     >
-                        <Input type="file" />
+                        <Upload
+                            listType="picture"
+                            maxCount={1} // Limit to one file
+                            beforeUpload={() => false} // Prevent automatic upload
+                        >
+                            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                        </Upload>
                     </Form.Item>
+
                 </Form>
+
             </Modal>
         </div>
     );

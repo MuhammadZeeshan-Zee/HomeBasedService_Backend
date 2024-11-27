@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { message } from 'antd';  
+import { API_URL } from '../../config';
 
 const Register = () => {
   const [registerData, setRegistrationData] = useState({

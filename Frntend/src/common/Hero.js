@@ -38,7 +38,6 @@ const [userProfile, setUserProfile] = useState({
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const navigate = useNavigate();
   const handleLogout = () => {
-    // dispatch(removeUserInfo());
     localStorage.clear();
     navigate('/');
   };

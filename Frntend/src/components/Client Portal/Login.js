@@ -7,7 +7,7 @@ import UserContext from "../Context/UserContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "../../features/auth/authSlice";
-import Cookies from "js-cookie";
+
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -57,7 +57,7 @@ const Login = () => {
       if (response.data.data.user.action === true) {
         console.log("true");
         navigate("/");
-        message.error("you are blocked by admin")
+        message.error("you are blocked by admin");
       } else {
         if (response.data.statusCode === 200) {
           const { accessToken, refreshToken, user } = response.data.data;

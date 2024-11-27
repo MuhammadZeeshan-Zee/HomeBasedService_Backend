@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Select, Input, message } from "antd";
 import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { text } from "@fortawesome/fontawesome-svg-core";
+
 
 const { Option } = Select;
 const { Search } = Input;
