@@ -1,10 +1,31 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Hero from "../../common/Hero";
 import BlogImage from "../../assests/images/headerimg.jpg";
 import Footer from "../../common/Footer";
 
 function Ourcleaning() {
-  const arr = [
+  const [services, setServices] = useState([]); // State for storing services data
+
+  // Fetch services from API
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/service/readAllService");
+        const servicesData = Array.isArray(response.data.data.services)
+          ? response.data.data.services
+          : [];
+        setServices(servicesData);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
+  const teamMembers = [
     {
       img: "./images/Worker1.jpg",
       title: "Zeeshan (Project Coordinator)",
@@ -29,10 +50,10 @@ function Ourcleaning() {
     <>
       <Hero text="Home Services in" text1="Gujranwala" image={BlogImage} />
 
-      <div className="bg-[#F8F8F8] min-h-screen flex flex-col items-center ">
+      <div className="bg-[#F8F8F8] min-h-screen flex flex-col items-center">
         <div className="text-center mt-32">
           <h1 className="text-[40px] md:text-[50px] font-bold text-neutral-800">
-            Our maintaining Service
+            Our Maintaining Service
           </h1>
           <p className="text-[16px] md:text-[20px] mt-4 text-neutral-500 leading-custom mb-2 m-3">
             Whether you're moving to a new place, need help with your
@@ -42,39 +63,60 @@ function Ourcleaning() {
           </p>
         </div>
 
-      m 
+        {/* Services Section */}
+        <div className="mt-10 w-full px-4">
+          <div className="flex flex-wrap justify-center">
+            {services.map((service, index) => (
+              <div className="w-full md:w-1/3 p-4" key={index}>
+                <div className="flex flex-col h-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md mx-auto">
+                  <img
+                    src={service.image || "./images/default.jpg"} // Fallback to default image
+                    className="w-full rounded-t-lg"
+                    alt="Service"
+                  />
+                  <div className="p-4 flex flex-col flex-grow">
+                    <h5 className="text-lg font-medium text-[1.4rem] text-neutral-800">
+                      {service.name}
+                    </h5>
+                    <p className="text-neutral-400 leading-custom mt-4 mb-2 flex-grow">
+                      {service.description}
+                    </p>
+                    <Link to="/book">
+                      <button className="bg-transparent text-[#ED5521] font-bold py-2 px-4 rounded mt-2 border">
+                        Book Now
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
-        
+        {/* Meet Our Team Section */}
         <div className="text-center mt-16">
           <p className="text-[#ED5521]">FEATURED</p>
           <h1 className="text-[40px] md:text-[50px] font-bold text-neutral-800">
             Meet our Team
           </h1>
-          <p className="text-[16px] md:text-[20px] mt-4 text-neutral-500 leading-custom mb-2"></p>
-          <Link to="/book">
-            <button className="bg-transparent text-[#ED5521] font-bold py-2 px-4 rounded mt-6 border border-[#ED5521] hover:bg-[#ED5521] hover:text-white">
-              Book Now
-            </button>
-          </Link>
-
           <div className="mt-10 w-full px-4 mb-16">
             <div className="flex flex-wrap justify-center">
-              {arr.map((item, index) => (
+              {teamMembers.map((member, index) => (
                 <div key={index} className="w-full md:w-1/3 p-4 flex">
                   <div className="flex flex-col bg-white rounded-lg border border-gray-200 shadow-md mx-auto h-full">
                     <div className="w-full h-72 overflow-hidden">
                       <img
-                        src={item.img}
+                        src={member.img}
                         className="w-full h-full object-cover rounded-t-lg"
-                        alt="Card"
+                        alt="Team Member"
                       />
                     </div>
                     <div className="p-4 flex-grow">
                       <h5 className="text-lg font-medium text-[1.4rem] text-neutral-800">
-                        {item.title}
+                        {member.title}
                       </h5>
                       <p className="text-neutral-500 leading-custom mt-4 mb-2">
-                        {item.description}
+                        {member.description}
                       </p>
                     </div>
                   </div>
@@ -83,10 +125,9 @@ function Ourcleaning() {
             </div>
           </div>
         </div>
-
       </div>
 
-      {/* Service Area Section */}
+      {/* Service Areas Section */}
       <section className="py-6 bg-gray-50">
         <div className="text-center">
           <h1 className="text-[40px] md:text-[50px] font-semibold text-neutral-800">
