@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "src/api/index.js",
+            "src": "src/index.js",
             "use": "@vercel/node",
             "config": {
                 "includeFiles": [
@@ -15,7 +15,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "src/api/index.js"
+            "dest": "src/index.js"
         }
     ]
 }
