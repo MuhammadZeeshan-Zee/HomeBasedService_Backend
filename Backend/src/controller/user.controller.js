@@ -324,44 +324,35 @@ const updateUserDetails = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, user, "Account Details updated successfully"));
 });
-const updateUserAvatar = asyncHandler(async (req, res, next) => {
-  try {
-    console.log("Request received");
+const updateUserAvatar = asyncHandler(async (req, res) => {
+  console.log(1);
+  let avtarLocalPath;
+  // if (files && Array.isArray(files.avatar) && files.avatar.length > 0) {
+  avtarLocalPath = req.files?.avatar[0]?.path;
+  // }
 
-    let avtarLocalPath = req.files?.avatar[0]?.path;
-
-    if (!avtarLocalPath) {
-      throw new ApiError("Avatar image is missing");
-    }
-
-    const avtarCloud = await uploadOnCloudinary(avtarLocalPath);
-    console.log("Uploaded to Cloudinary:", avtarCloud);
-
-    if (!avtarCloud.url) {
-      throw new ApiError("Error while uploading Avatar to Cloudinary");
-    }
-
-    const user = await User.findByIdAndUpdate(
-      req.user?._id,
-      {
-        $set: {
-          avtar: avtarCloud.url,
-        },
-      },
-      { new: true }
-    ).select("-password");
-
-    console.log("User updated:", user);
-
-    res.status(200).json(
-      new ApiResponse(200, user, "Avatar image updated Successfully")
-    );
-  } catch (error) {
-    console.error("Error in updateUserAvatar:", error);
-    next(error); // Pass error to middleware for structured response
+  if (!avtarLocalPath) {
+    throw new ApiError("Avtar image is missing");
   }
-});
+  const avtarCloud = await uploadOnCloudinary(avtarLocalPath);
+  console.log("avtarCloud", avtarCloud);
 
+  if (!avtarCloud.url) {
+    throw new ApiError("Error while uploading Avtar on cloudinary");
+  }
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        avtar: avtarCloud.url,
+      },
+    },
+    { new: true }
+  ).select("-password");
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "Avatar image updated Successfully"));
+});
 
 const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
