@@ -18,13 +18,17 @@ const OrderHistory = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    "https://home-based-service-backend.vercel.app/user/getAllOrders",
+                    "https://home-based-service-backend.vercel.app/user/bookedHistory",
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
                 );
-                const apiData = response.data.data.bookedOrders.map((item) => ({
+                console.log("response", response);
+
+                const apiData = response.data.data.map((item) => ({
+                    
                     key: item._id,
+                    
                     name: `${item.firstName} ${item.lastName}`,
                     email: item.email,
                     phone: item.phoneNumber,
