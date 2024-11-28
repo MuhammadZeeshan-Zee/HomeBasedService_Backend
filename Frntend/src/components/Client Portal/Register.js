@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { message } from 'antd';
+import { LoadingOutlined } from "@ant-design/icons";
+
 // import { API_URL } from '../../config';
 
 const Register = () => {
@@ -18,6 +20,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [loadingOtp, setLoadingOtp] = useState(false);
+  
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -40,8 +43,7 @@ const Register = () => {
 
     setLoadingOtp(true);
     try {
-      // Sending OTP using the new API endpoint
-      const response = await axios.post(`https://home-based-service-backend.vercel.app/user/otp`, {
+      const response = await axios.post("https://home-based-service-backend.vercel.app/user/otp", {
         email: registerData.email,
       });
       if (response.status === 200) {
@@ -52,11 +54,13 @@ const Register = () => {
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
-      message.error("An error occurred while sending the OTP. Please try again.");
+      message.error(
+        "An error occurred while sending the OTP. Please try again."
+      );
     } finally {
       setLoadingOtp(false);
-    }
-  };
+    }
+  };
 
 
   const handleSubmit = async (e) => {
@@ -110,14 +114,23 @@ const Register = () => {
                 onChange={handleChange}
                 className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500"
               />
-              <button
+             <button
                 type="button"
                 onClick={handleGetOtp}
-                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                className={`px-4 py-2 flex items-center justify-center bg-red-500 text-white rounded-md hover:bg-red-600 ${
+                  loadingOtp ? "cursor-not-allowed opacity-70" : ""
+                }`}
                 disabled={loadingOtp}
               >
-                {loadingOtp ? "Sending OTP..." : "Get OTP"}
+                {loadingOtp ? (
+                  <>
+                    <LoadingOutlined className="mr-2 animate-spin" />
+                  </>
+                ) : (
+                  "Get OTP"
+                )}
               </button>
+
             </div>
           </div>
 

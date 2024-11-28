@@ -52,30 +52,7 @@ const OrderHistory = () => {
     }, []);
 
     // Handle status change
-    const handleStatusChange = async (value, key) => {
-        const updatedData = servicesData.map((service) =>
-            service.key === key ? { ...service, status: value } : service
-        );
-        setServicesData(updatedData);
-        setFilteredData(updatedData); // Ensure filtered data updates as well
-
-        try {
-            await axios.put(
-                `https://home-based-service-backend.vercel.app/user/updateOrderStatus/${key}`,
-                {
-                    status: value,
-                },
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
-            );
-
-            message.success("Status updated successfully");
-        } catch (error) {
-            message.error("Failed to update status");
-            console.error("Error updating status:", error);
-        }
-    };
+  
 
     const columns = [
         {
