@@ -11,20 +11,17 @@ import Sattelite from './components/Services Area/Sattelite';
 import FAQComponent from './components/About/FAQComponent';
 import Verify from './components/Client Portal/Verify';
 import Blog from './components/About/Blog';
-
+import TermsAndConditions from './components/About/TermsAndConditions';
 // In your index.js or App.js
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import Login from './components/Client Portal/Login';
 import Register from './components/Client Portal/Register';
 import Profile from './components/Client Portal/Profile';
 import UpdateProfile from './components/Client Portal/UpdateProfile';
 import ForgetPassword from './components/Client Portal/ForgetPassword';
 import ResetPassword from './components/Client Portal/ResetPassword';
-
 import ChangePassword from './components/Client Portal/ChangePassword';
-
 import Dashboard from './pages/Dashboard';
 import MainLayout from './components/MainLayout';
 import Orders from './pages/Orders';
@@ -49,24 +46,25 @@ function App() {
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Ourcleaning />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/update-profile" element={<UpdateProfile />} />
+                <Route path="/forgetpassword" element={<ForgetPassword />} />
+                <Route path="/resetpassword" element={<ResetPassword />} />
+                <Route path="/ChangePassword" element={<ChangePassword />} />
+                <Route path="/verify" element={<Verify />} />
+
+                <Route path="/*" element={<NotLogin />} />
                 <Route path="/Book" element={<Book />} />
+
                 <Route path="/colony" element={<Colony />} />
                 <Route path="/Town" element={<Town />} />
                 <Route path="/Ghakhar" element={<Ghakhar />} />
                 <Route path="/sattelite" element={<Sattelite />} />
                 <Route path="/faq" element={<FAQComponent />} />
                 <Route path="/blog" element={<Blog />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/update-profile" element={<UpdateProfile />} />
-                <Route path="/*" element={<NotLogin />} />
-
-                <Route path="/forgetpassword" element={<ForgetPassword />} />
-                <Route path="/resetpassword" element={<ResetPassword />} />
-
-                <Route path="/ChangePassword" element={<ChangePassword />} />
-                <Route path="/verify" element={<Verify />} />
+                <Route path="/termsandconditions" element={<TermsAndConditions />} />
 
                 {/* Admin Route */}
                 <Route
@@ -75,10 +73,8 @@ function App() {
                     <PrivateRoute requiredRole="admin">
                       <MainLayout />
                    </PrivateRoute>
-                  }
-                >
+                  }>
                   <Route index element={<Dashboard />} />
-
                   <Route path="Orders" element={<Orders />} />
                   <Route path="customers" element={<Customers />} />
                   <Route path="Employees" element={<Employees />} />

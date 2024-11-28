@@ -46,7 +46,7 @@ const [userProfile, setUserProfile] = useState({
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
   const serviceArea = [{ name: 'Dc Colony', url: '/colony' }, { name: 'Model Town', url: '/town' }, { name: 'Ghakhar', url: '/Ghakhar' }, { name: 'Satellite Town', url: '/sattelite' },]
-  const aboutSection = [{ name: 'FAQs', url: '/faq' }, { name: 'Blog', url: '/blog' }]
+  const aboutSection = [{ name: 'FAQs', url: '/faq' }, { name: 'Blog', url: '/blog' }, { name: 'Terms', url: '/termsandconditions' }]
   const clientSection = [
     user? { name: 'Book Now', url: '/book' }:{ name: 'Login', url: '/login' },
     user? { name: 'Logout', url: '/' }:{ name: 'Register', url: '/register' },

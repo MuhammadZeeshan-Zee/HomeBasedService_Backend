@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Table, Select, Input, message } from "antd";
 import axios from "axios";
+import moment from "moment"; // For formatting dates
 import "@fortawesome/fontawesome-free/css/all.min.css";
-
 
 const { Option } = Select;
 const { Search } = Input;
@@ -38,6 +37,7 @@ const Orders = () => {
           address: item.address,
           mapAddress: item.mapAddress,
           status: item.status,
+          createdAt: item.createdAt, // Assuming the backend provides this field
         }));
 
         setServicesData(apiData);
@@ -132,13 +132,24 @@ const Orders = () => {
       dataIndex: "service",
       key: "service",
       render: (text) => <span>{highlightText(text)}</span>,
-    }, {
+    },
+    {
       title: "Address",
       dataIndex: "address",
       key: "address",
-      render: (text) => <span>{ highlightText(text)}</span>
+      render: (text) => <span>{highlightText(text)}</span>,
     },
-
+    {
+      title: "Date & Time",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => (
+        <span>
+          {moment(text).format("MMMM Do YYYY, h:mm A")} <br />
+          ({moment(text).format("dddd")})
+        </span>
+      ),
+    },
     {
       title: "Status",
       dataIndex: "status",
@@ -177,7 +188,6 @@ const Orders = () => {
         </a>
       ),
     },
-
   ];
 
   return (

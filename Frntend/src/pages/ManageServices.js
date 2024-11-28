@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Space, Modal, Form, Input, message } from 'antd';
@@ -189,22 +190,23 @@ const ManageServices = () => {
                         {modalState.editingService ? 'Update' : 'Add'}
                     </Button>,
                 ]}>
-                
                 <Form form={form} layout="vertical">
                     <Form.Item
                         name="name"
                         label="Service Name"
                         rules={[{ required: true, message: 'Please input the service name!' }]}
                     >
-                        <Input />
+                        <Input placeholder="Enter the service name" />
                     </Form.Item>
+
                     <Form.Item
                         name="description"
                         label="Description"
                         rules={[{ required: true, message: 'Please input the description!' }]}
                     >
-                        <Input />
+                        <Input placeholder="Enter a brief description of the service" />
                     </Form.Item>
+
                     <Form.Item
                         name="image"
                         label="Image"
@@ -226,8 +228,8 @@ const ManageServices = () => {
                             <Button icon={<UploadOutlined />}>Click to Upload</Button>
                         </Upload>
                     </Form.Item>
-
                 </Form>
+
 
             </Modal>
         </div>

@@ -239,21 +239,23 @@ const Employees = () => {
             label="First Name"
             rules={[{ required: true, message: 'Please input the name!' }]}
           >
-            <Input />
+            <Input placeholder="Enter your first name" />
           </Form.Item>
+
           <Form.Item
             name="lastName"
             label="Last Name"
             rules={[{ required: true, message: 'Please input the last name!' }]}
           >
-            <Input />
+            <Input placeholder="Enter your last name" />
           </Form.Item>
+
           <Form.Item
             name="email"
             label="Email"
             rules={[{ required: true, message: 'Please input the email!' }]}
           >
-            <Input />
+            <Input placeholder="Enter your email address" />
           </Form.Item>
 
           <Form.Item
@@ -261,17 +263,16 @@ const Employees = () => {
             label="Phone"
             rules={[{ required: true, message: 'Please input the phone number!' }]}
           >
-            <Input />
+            <Input placeholder="3175110179" />
           </Form.Item>
 
           <Form.Item
             name="address"
             label="Address"
-            rules={[{ required: true, message: 'Please input the Loction!' }]}
+            rules={[{ required: true, message: 'Please input the location!' }]}
           >
-            <Input />
+            <Input placeholder="Enter your address" />
           </Form.Item>
-
 
           <Form.Item
             name="category"
@@ -287,8 +288,8 @@ const Employees = () => {
               <Option value="Carpet Cleaning Services">Carpet Cleaning Services</Option>
             </Select>
           </Form.Item>
-
         </Form>
+
 
       </Modal>
     </div>
