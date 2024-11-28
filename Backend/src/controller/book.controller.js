@@ -49,6 +49,13 @@ const createbookService = asyncHandler(async (req, res) => {
     user: req.user._id,
   });
   console.log("orderDetails", orderDetails);
+  const user = await User.findOne({ email });
+  const allBookedOrders = await Book.find({ email });
+  console.log("allBookedOrders", allBookedOrders);
+
+  user.orderList = allBookedOrders;
+  await user.save();
+  console.log("user", user);
 
   const body = {
     from: `${process.env.EMAIL_TITLE_SMTP} <${process.env.EMAIL_ID_SMTP}>`,
@@ -139,6 +146,19 @@ const createbookService = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Error sending email");
   }
 });
+const bookedHistory = asyncHandler(async (req, res) => {
+  const email = req.user.email;
+  console.log("email", email);
+
+  const orderHistory = await Book.find({ email });
+  console.log("orderHistory", orderHistory);
+
+  res
+    .status(200)
+    .json(
+      new ApiResponse(200, orderHistory, "order history fetched successfully")
+    );
+});
 const getAllBookedOrders = asyncHandler(async (req, res) => {
   const bookedOrders = await Book.find(); // Fetch all booked orders from the database
   console.log("!bookedOrders.length", !bookedOrders.length);
@@ -185,4 +205,10 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
       new ApiResponse(200, updateData, "order status updated successfully")
     );
 });
-export { createbookService, getAllBookedOrders, updateOrderStatus };
+
+export {
+  createbookService,
+  getAllBookedOrders,
+  updateOrderStatus,
+  bookedHistory,
+};
