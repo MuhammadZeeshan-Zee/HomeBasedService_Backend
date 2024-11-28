@@ -22,7 +22,7 @@ const Orders = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://home-based-service.vercel.app/user/getAllOrders",
+          "https://home-based-service-backend.vercel.app/user/getAllOrders",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -92,7 +92,7 @@ const Orders = () => {
 
     try {
       await axios.put(
-        `https://home-based-service.vercel.app/user/updateOrderStatus/${key}`,
+        `https://home-based-service-backend.vercel.app/user/updateOrderStatus/${key}`,
         {
           status: value,
         },

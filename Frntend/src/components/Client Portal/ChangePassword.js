@@ -23,7 +23,7 @@ const ChangePassword = () => {
     if (password === confirmPassword) {
       try {
         const response = await axios.post(
-          'https://home-based-service.vercel.app/user/changePassword',
+          'https://home-based-service-backend.vercel.app/user/changePassword',
           {
             oldPassword,
             newPassword: password,

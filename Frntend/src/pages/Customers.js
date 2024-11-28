@@ -18,7 +18,7 @@ const Customers = () => {
   const fetchCustomers = async () => {
     try {
       const response = await axios.get(
-        "https://home-based-service.vercel.app/user/getAllUsers",
+        "https://home-based-service-backend.vercel.app/user/getAllUsers",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -44,7 +44,7 @@ const Customers = () => {
   const handleBlockUnblock = async (id) => {
     try {
       const response = await axios.put(
-        `https://home-based-service.vercel.app/user/updateUserAction/${id}`,
+        `https://home-based-service-backend.vercel.app/user/updateUserAction/${id}`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },

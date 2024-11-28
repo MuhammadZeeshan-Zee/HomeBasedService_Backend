@@ -12,25 +12,25 @@ import axios from 'axios';
 
 function Hero({ text, text1, image }) {
   // const user = useSelector((state) => state.auth.userToken);
- // Retrieve user data from localStorage
-const user = localStorage.getItem("auth");
+  // Retrieve user data from localStorage
+  const user = localStorage.getItem("auth");
 
 
-const authObject = JSON.parse(user);
-console.log("authObject", authObject);
+  const authObject = JSON.parse(user);
+  console.log("authObject", authObject);
 
-const token = authObject?.accessToken;
-console.log("token", token);
-// Parse it back to an object if it exists
-// const user = storedUserData ? JSON.parse(storedUserData) : null;
+  const token = authObject?.accessToken;
+  console.log("token", token);
+  // Parse it back to an object if it exists
+  // const user = storedUserData ? JSON.parse(storedUserData) : null;
 
-console.log("user",user); // { name: "John Doe", email: "johndoe@example.com", role: "admin" }
-const [userProfile, setUserProfile] = useState({
-  firstName: "",
-  lastName: "",
-  phoneNumber: "",
-  avtar: "",
-});
+  console.log("user", user); // { name: "John Doe", email: "johndoe@example.com", role: "admin" }
+  const [userProfile, setUserProfile] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    avtar: "",
+  });
   const dispatch = useDispatch();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -48,25 +48,25 @@ const [userProfile, setUserProfile] = useState({
   const serviceArea = [{ name: 'Dc Colony', url: '/colony' }, { name: 'Model Town', url: '/town' }, { name: 'Ghakhar', url: '/Ghakhar' }, { name: 'Satellite Town', url: '/sattelite' },]
   const aboutSection = [{ name: 'FAQs', url: '/faq' }, { name: 'Blog', url: '/blog' }, { name: 'Terms', url: '/termsandconditions' }]
   const clientSection = [
-    user? { name: 'Book Now', url: '/book' }:{ name: 'Login', url: '/login' },
-    user? { name: 'Logout', url: '/' }:{ name: 'Register', url: '/register' },
+    user ? { name: 'Book Now', url: '/book' } : { name: 'Login', url: '/login' },
+    user ? { name: 'Logout', url: '/' } : { name: 'Register', url: '/register' },
   ];
   console.log('uservalue', user);
-  const getUserDeatils=async()=>{
+  const getUserDeatils = async () => {
     const res = await axios.get(
-      "https://home-based-service.vercel.app/user/getCurrentUser",
+      "https://home-based-service-backend.vercel.app/user/getCurrentUser",
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
     setUserProfile(res.data.data);
-    
+
   }
-useEffect(()=>{
-  if (token) {
-    getUserDeatils()
- }
-},[])
+  useEffect(() => {
+    if (token) {
+      getUserDeatils()
+    }
+  }, [])
   return (
     <>
       <div className="relative">
@@ -87,7 +87,7 @@ useEffect(()=>{
 
                 <div className="hidden sm:block sm:ml-6 text-black">
                   <div className="flex space-x-4 ml-40">
-                    <Link to={'/'}  className="text-lg font-medium text-white  hover:text-black  block px-3 py-2 rounded-md"> Services</Link>
+                    <Link to={'/'} className="text-lg font-medium text-white  hover:text-black  block px-3 py-2 rounded-md"> Services</Link>
                     <div className="relative group">
                       <button className="text-lg font-semibold hover:text-black text-white  px-3 py-2 rounded-md flex items-center">
                         Services areas
@@ -153,58 +153,58 @@ useEffect(()=>{
                         </svg>
                       </button>
                       <div className="absolute top-8 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden group-hover:block">
-                      {user ? (
-                       <>
-                        <p
-                          onClick={handleLogout}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
-                        >
-                          Logout
-                        </p>
-                         <Link to="/book">
-                         <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
-                           Book Now
-                         </p>
-                         </Link></>
-                       
-                      ) : (
-                        <>
-                          <Link to="/login">
-                            <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
-                              Login
+                        {user ? (
+                          <>
+                            <p
+                              onClick={handleLogout}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
+                            >
+                              Logout
                             </p>
-                          </Link>
-                          <Link to="/register">
-                            <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
-                              Register
-                            </p>
-                          </Link>
-                        </>
-                      )}
-                     
-                    </div>
+                            <Link to="/book">
+                              <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+                                Book Now
+                              </p>
+                            </Link></>
+
+                        ) : (
+                          <>
+                            <Link to="/login">
+                              <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+                                Login
+                              </p>
+                            </Link>
+                            <Link to="/register">
+                              <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+                                Register
+                              </p>
+                            </Link>
+                          </>
+                        )}
+
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-                  <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4">
 
-                  <div className="hidden sm:block bg-[#FF0000] p-3 rounded-xl">
-                    <Link to={'https://wa.me/923177190178'} className="button-4 w-button text-lg font-semibold text-white hover:text-white px-3 py-2 rounded-md">Contact Us</Link>
-                  </div>
-                  
-                  {user && (
+                <div className="hidden sm:block bg-[#FF0000] p-3 rounded-xl">
+                  <Link to={'https://wa.me/923177190178'} className="button-4 w-button text-lg font-semibold text-white hover:text-white px-3 py-2 rounded-md">Contact Us</Link>
+                </div>
+
+                {user && (
                   <Link to={'/profile'}>
                     <img
-                      src={userProfile.avtar ||profileLogo }
+                      src={userProfile.avtar || profileLogo}
                       alt="Profile"
                       className="w-12 h-12 bg-cover rounded-full sm:ml-10"
                     />
                   </Link>
-                )} 
+                )}
 
-                </div>
+              </div>
 
 
               <div className="sm:hidden">
@@ -317,19 +317,19 @@ useEffect(()=>{
                   {isClientPortalOpen && (
                     <div className="absolute mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20">
                       {user ? (
-                       <>
-                        <p
-                          onClick={handleLogout}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
-                        >
-                          Logout
-                        </p>
-                         <Link to="/book">
-                         <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
-                           Book Now
-                         </p>
-                         </Link></>
-                       
+                        <>
+                          <p
+                            onClick={handleLogout}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
+                          >
+                            Logout
+                          </p>
+                          <Link to="/book">
+                            <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+                              Book Now
+                            </p>
+                          </Link></>
+
                       ) : (
                         <>
                           <Link to="/login">
@@ -344,7 +344,7 @@ useEffect(()=>{
                           </Link>
                         </>
                       )}
-                     
+
                     </div>
                   )}
                 </div>

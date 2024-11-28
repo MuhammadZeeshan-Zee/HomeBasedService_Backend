@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { message } from 'antd';
-import { API_URL } from '../../config';
+// import { API_URL } from '../../config';
 
 const Register = () => {
   const [registerData, setRegistrationData] = useState({
@@ -40,7 +40,10 @@ const Register = () => {
 
     setLoadingOtp(true);
     try {
-      const response = await axios.post(`${API_URL}/user/send-otp`, { email: registerData.email });
+      // Sending OTP using the new API endpoint
+      const response = await axios.post(`https://home-based-service-backend.vercel.app/user/otp`, {
+        email: registerData.email,
+      });
       if (response.status === 200) {
         setOtpSent(true);
         message.success("OTP sent to your email.");
@@ -54,6 +57,7 @@ const Register = () => {
       setLoadingOtp(false);
     }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,8 +81,8 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(`${API_URL}/user/register`, registerData);
-      if (response.status === 201) {
+      const response = await axios.post(`https://home-based-service-backend.vercel.app/user/register`, registerData);
+      if (response.status === 200) {
         message.success("You registered successfully.");
         navigate('/login');
       } else {
@@ -88,6 +92,7 @@ const Register = () => {
       console.error("Registration error:", error);
       message.error("An error occurred while registering. Please try again later.");
     }
+    
   };
 
   return (
@@ -126,7 +131,7 @@ const Register = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500"
             />
           </div>
-          
+
           <div className="mb-4">
             <label className="block text-gray-700">First Name</label>
             <input

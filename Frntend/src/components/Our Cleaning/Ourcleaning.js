@@ -12,7 +12,7 @@ function Ourcleaning() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/service/readAllService");
+        const response = await axios.get("https://home-based-service-backend.vercel.app/service/readAllService");
         const servicesData = Array.isArray(response.data.data.services)
           ? response.data.data.services
           : [];

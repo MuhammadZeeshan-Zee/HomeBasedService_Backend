@@ -22,7 +22,7 @@ const ManageServices = () => {
 
     const fetchServices = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/service/readAllService');
+            const response = await axios.get('https://home-based-service-backend.vercel.app/service/readAllService');
             const servicesData = Array.isArray(response.data.data.services)
                 ? response.data.data.services
                 : [];
@@ -36,7 +36,7 @@ const ManageServices = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:4000/service/deleteService/${id}`);
+            await axios.delete(`https://home-based-service-backend.vercel.app/service/deleteService/${id}`);
             message.success('Service deleted successfully');
             fetchServices();
         } catch (error) {
@@ -80,12 +80,12 @@ const ManageServices = () => {
                 if (editingService) {
                     // Update service API call
                     await axios.put(
-                        `http://localhost:4000/service/updateService/${editingService._id}`,
+                        `https://home-based-service-backend.vercel.app/service/updateService/${editingService._id}`,
                         formData);
                     message.success('Service updated successfully');
                 } else {
                     // Add service API call
-                    await axios.post('http://localhost:4000/service/addService',formData);
+                    await axios.post('https://home-based-service-backend.vercel.app/service/addService',formData);
                     message.success('Service added successfully');
                 }
                 fetchServices();

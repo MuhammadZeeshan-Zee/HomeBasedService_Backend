@@ -1,8 +1,8 @@
+import DBConnection from "../db/index.js";
 import dotenv from "dotenv";
 dotenv.config({
   path: "./.env",
 });
-import DBConnection from "../db/index.js";
 import { app } from "../app.js";
 
 const response = DBConnection()

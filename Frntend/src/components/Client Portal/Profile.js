@@ -23,7 +23,7 @@ const UserProfile = () => {
     const fetchUserProfile = async () => {
       try {
         const res = await axios.get(
-          "https://home-based-service.vercel.app/user/getCurrentUser",
+          "https://home-based-service-backend.vercel.app/user/getCurrentUser",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -42,26 +42,37 @@ const UserProfile = () => {
     if (file) {
       const formData = new FormData();
       formData.append("avatar", file);
-      console.log("formData", formData);
+
+      // Debug: Log FormData entries
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ": " + pair[1]);
+      }
 
       try {
         const { data } = await axios.post(
-          "https://home-based-service.vercel.app/user/updateAvatar",
+          "http://localhost:4000/user/updateAvatar",
           formData,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
+        console.log("data", data);
+
         // Update the profile image after successful upload
         setUserProfile((prevProfile) => ({
           ...prevProfile,
-          image: data.data.image,
+          avtar: data.data.avtar,
         }));
       } catch (error) {
         console.error("Error updating profile image:", error);
       }
+    } else {
+      console.error("No file selected.");
     }
   };
+
 
   const handleLogout = () => {
     localStorage.clear();
@@ -94,8 +105,7 @@ const UserProfile = () => {
           <div className='text-center my-4'>
             <div className='py-2'>
               <h3 className='font-bold text-2xl text-gray-800 mb-1'>
-                {userProfile.firstName} {" "}
-                {userProfile.lastName}
+                {userProfile.firstName} {userProfile.lastName}
               </h3>
               <div className='inline-flex text-gray-700 items-center'>
                 {userProfile.phoneNumber}
@@ -106,12 +116,15 @@ const UserProfile = () => {
           <div className='py-2'>
             <div className='text-left text-gray-800'>
               <div className='mb-2'>
-                <h1 className='block text-gray-500 font-semibold'>First Name:
-                 {" "} {userProfile.firstName}</h1>
-                <h1 className='block text-gray-500 font-semibold'>Last Name:      {" "}
-                {userProfile.lastName}</h1>
-                <h1 className='block text-gray-500 font-semibold'>Phone Number: {" "}
-                {userProfile.phoneNumber}</h1>
+                <h1 className='block text-gray-500 font-semibold'>
+                  First Name: {userProfile.firstName}
+                </h1>
+                <h1 className='block text-gray-500 font-semibold'>
+                  Last Name: {userProfile.lastName}
+                </h1>
+                <h1 className='block text-gray-500 font-semibold'>
+                  Phone Number: {userProfile.phoneNumber}
+                </h1>
               </div>
             </div>
           </div>

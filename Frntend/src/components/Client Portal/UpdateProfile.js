@@ -8,18 +8,18 @@ function UpdateProfile() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [message, setMessage] = useState('');
   const authData = localStorage.getItem("auth");
-  
+
   const navigate = useNavigate();
   const authObject = JSON.parse(authData);
-  console.log("authObject",authObject);
-  
+  console.log("authObject", authObject);
+
   const token = authObject?.accessToken;
-  console.log("token",token);
-  
+  console.log("token", token);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('https://home-based-service.vercel.app/user/getCurrentUser', {
+        const res = await axios.get('https://home-based-service-backend.vercel.app/user/getCurrentUser', {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("res", res);
@@ -36,11 +36,11 @@ function UpdateProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://home-based-service.vercel.app/user/updateUserDetails', {
+      const response = await axios.post('https://home-based-service-backend.vercel.app/user/updateUserDetails', {
         firstName,
         lastName,
         phoneNumber,
-      },{
+      }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.status === 200) {
