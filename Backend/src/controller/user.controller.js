@@ -6,7 +6,119 @@ import { ApiResponse } from "../utils/apiResponse.js";
 import jwt from "jsonwebtoken";
 import { SendEmailUtil } from "../utils/emailSender.js";
 import mongoose from "mongoose";
+import { OTP } from "../model/otp.model.js";
 
+const sendOTP = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const existedUser = await User.findOne({ email });
+  if (existedUser) {
+    throw new ApiError(400, "You are already registered");
+  }
+  const existedOTP = await OTP.findOne({ email });
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  const otpExpires = Date.now() + 300000;
+  console.log("existedOTP", existedOTP);
+
+  if (!existedOTP) {
+    const user = await OTP.create({
+      email,
+      otp,
+      otpExpires,
+    });
+    console.log("user", user);
+    const body = {
+      from: `${process.env.EMAIL_TITLE_SMTP} <${process.env.EMAIL_ID_SMTP}>`,
+      to: email,
+      subject: "Sign Up",
+      html: `<h2>Thanks for using Server At Door</h2>
+      <p style="font-size: 16px;">【Server At Door】Dear user, please check your verification code as below. If this operation is not submited from yourself, please ignore this message!</p>
+      <p style="font-size: 16px;">Verification code：</p>
+      <p style="font-size: 16px;">${user.otp}</p>
+      <p style="font-size: 16px;">Thank you for your support. Please contact us if you have any questions.</p>
+      <p>©2024 All rights reserved.</p>
+      `,
+    };
+    const message = "Please check your email to verify!";
+
+    try {
+      await SendEmailUtil(body);
+      res.status(200).json(new ApiResponse(200, {}, message));
+    } catch (error) {
+      console.error("Error sending email:", error.message);
+      throw new ApiError(500, "Error sending email");
+    }
+  }
+  if (existedOTP) {
+    existedOTP.otp = otp;
+    existedOTP.otpExpires = otpExpires;
+    await existedOTP.save();
+    console.log("existedOTP", existedOTP);
+
+    // const savedUser = await user.save({ validateBeforeSave: false });
+    // console.log("savedUser", savedUser);
+    const body = {
+      from: `${process.env.EMAIL_TITLE_SMTP} <${process.env.EMAIL_ID_SMTP}>`,
+      to: email,
+      subject: "Sign Up",
+      html: `<h2>Thanks for using Server At Door</h2>
+          <p style="font-size: 16px;">【Server At Door】Dear user, please check your verification code as below. If this operation is not submited from yourself, please ignore this message!</p>
+          <p style="font-size: 16px;">Verification code：</p>
+          <p style="font-size: 16px;">${existedOTP.otp}</p>
+          <p style="font-size: 16px;">Thank you for your support. Please contact us if you have any questions.</p>
+          <p>©2024 All rights reserved.</p>
+          `,
+    };
+    const message = "Please check your email to verify!";
+
+    try {
+      await SendEmailUtil(body);
+      res.status(200).json(new ApiResponse(200, {}, message));
+    } catch (error) {
+      console.error("Error sending email:", error.message);
+      throw new ApiError(500, "Error sending email");
+    }
+  }
+});
+const verifyOTPAndRegister = asyncHandler(async (req, res) => {
+  const { email, otp, password, firstName, lastName, phoneNumber } = req.body;
+  if (
+    [email, otp, password, firstName, lastName, phoneNumber].some(
+      (field) => field?.trim() === ""
+    )
+  ) {
+    throw new ApiError(400, "All fields are required");
+  }
+  const otpVerifier = await OTP.findOne({ email, otp });
+  if (!otpVerifier || otpVerifier.otpExpires < Date.now()) {
+    throw new ApiError(400, "Invalid or expired OTP");
+  }
+
+  otpVerifier.otp = undefined;
+  otpVerifier.otpExpires = undefined;
+  const user = await User.create({
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    password,
+    avtar: "",
+  });
+  await otpVerifier.save();
+  await user.save();
+  console.log("otpVerifier", otpVerifier);
+  console.log("user", user);
+
+  const createdUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+  );
+  console.log("createdUser", createdUser);
+
+  res
+    .status(200)
+    .json(
+      new ApiResponse(200, createdUser, "OTP verified and User Registered")
+    );
+});
 const registerUser = asyncHandler(async (req, res) => {
   const { firstName, lastName, email, phoneNumber, password } = req.body;
   if (
@@ -306,7 +418,9 @@ const forgotPassword = asyncHandler(async (req, res) => {
                 <tr>
                   <td align="left" style="font-size: 16px; font-family: Arial, sans-serif; color: #333333;">
                     <h2 style="margin: 0; font-size: 22px;">Hello ${email},</h2>
-                    <p style="margin: 16px 0;">Your OTP is <strong style="color: #ff5a5f; font-size: 18px;">${user.otp}</strong></p>
+                    <p style="margin: 16px 0;">Your OTP is <strong style="color: #ff5a5f; font-size: 18px;">${
+                      user.otp
+                    }</strong></p>
                     <p style="margin: 16px 0; color: #666666;">If you did not initiate this request, please contact us immediately at <a href="mailto:eg@.com" style="color: #1a82e2; text-decoration: none;">eg@.com</a>.</p>
                     <p style="margin: 40px 0 0; font-weight: bold; color: #555555;">Thank you,</p>
                     <p style="margin: 0; color: #555555;">Developer Team</p>
@@ -396,20 +510,23 @@ const getAllUsers = asyncHandler(async (req, res) => {
   if (!users.length) {
     throw new ApiError(400, "Users not not enough to fectch");
   }
-  const filterUser=users.filter((user) => user.role !== "admin")
-  console.log("filterUser",filterUser);
-  
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(
-        200,
-        { filterUser, count: users.filter((user) => user.role !== "admin").length },
-        "All Users retrieved successfully"
-      )
-    );
+  const filterUser = users.filter((user) => user.role !== "admin");
+  console.log("filterUser", filterUser);
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        filterUser,
+        count: users.filter((user) => user.role !== "admin").length,
+      },
+      "All Users retrieved successfully"
+    )
+  );
 });
 export {
+  sendOTP,
+  verifyOTPAndRegister,
   registerUser,
   loginUser,
   logoutUser,
