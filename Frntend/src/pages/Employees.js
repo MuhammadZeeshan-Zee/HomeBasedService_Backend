@@ -257,11 +257,12 @@ const Employees = () => {
           </Form.Item>
 
           <Form.Item
-            name="phoneNumber"
-            label="Phone"
-            rules={[{ required: true, message: 'Please input the phone number!' }]}
-          >
-            <Input />
+  name="phoneNumber"
+  label="Phone"
+  rules={[{ required: true, message: 'Please input the phone number!' }]}
+>
+
+            <Input placeholder='+92...'/>
           </Form.Item>
 
           <Form.Item

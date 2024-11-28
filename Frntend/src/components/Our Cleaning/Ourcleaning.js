@@ -15,7 +15,7 @@ function Ourcleaning() {
       img: "./images/Worker3.jpg",
       title: "Abdul Wahab",
       description:
-        "Abdul wahab takes great pride in maintaining service and order, which are both essential values in his life. When she is not delighting customers, he enjoys taking strolls through his neighborhood parks.",
+        "Abdul wahab takes great pride in maintaining service and order, which are both essential values in his life. When he is not delighting customers, he enjoys taking strolls through his neighborhood parks.",
     },
     {
       img: "./images/Worker2.jpg",

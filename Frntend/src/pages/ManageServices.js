@@ -18,7 +18,7 @@ const ManageServices = () => {
 
     const fetchServices = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/service/readallServices', {
+            const response = await axios.get('https://home-based-service.vercel.app/service/readallServices', {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setServices(Array.isArray(response.data.data) ? response.data.data : []);
@@ -30,7 +30,7 @@ const ManageServices = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:4000/service/deleteService/${id}`, {
+            await axios.delete(`https://home-based-service.vercel.app/service/deleteService/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             message.success('Service deleted successfully');
@@ -66,13 +66,13 @@ const ManageServices = () => {
             try {
                 if (editingService) {
                     await axios.put(
-                        `http://localhost:4000/service/updateService/${editingService._id}`,
+                        `https://home-based-service.vercel.app/service/updateService/${editingService._id}`,
                         values,
                         { headers: { Authorization: `Bearer ${token}` } }
                     );
                     message.success('Service updated successfully');
                 } else {
-                    await axios.post('http://localhost:4000/service/addService', values, {
+                    await axios.post('https://home-based-service.vercel.app/service/addService', values, {
                         headers: { Authorization: `Bearer ${token}` },
                     });
                     message.success('Service added successfully');
