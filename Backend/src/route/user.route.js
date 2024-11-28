@@ -1,5 +1,7 @@
 import { Router } from "express";
 import {
+  sendOTP,
+  verifyOTPAndRegister,
   registerUser,
   loginUser,
   logoutUser,
@@ -17,7 +19,9 @@ import {
 import { upload } from "../middleware/multer.middleware.js";
 import { verifyJWT } from "../middleware/auth.middleware.js";
 const router = Router();
-router.route("/register").post(registerUser);
+router.route("/otp").post(sendOTP);
+router.route("/register").post(verifyOTPAndRegister);
+// router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 // secure routes
 router.route("/logout").post(verifyJWT, logoutUser);
