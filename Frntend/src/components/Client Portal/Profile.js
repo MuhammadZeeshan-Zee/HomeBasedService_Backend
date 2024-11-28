@@ -72,6 +72,9 @@ const UserProfile = () => {
       console.error("No file selected.");
     }
   };
+  const handlehistory = () => {
+    navigate("/OrderHistory");
+  };
 
 
   const handleLogout = () => {
@@ -145,6 +148,12 @@ const UserProfile = () => {
               className='bg-[#FF0000] w-full text-white py-2 px-4 rounded cursor-pointer'
             >
               Logout
+            </button>
+            <button
+              onClick={handlehistory}
+              className='bg-[#FF0000] w-full text-white py-2 px-4 rounded cursor-pointer'
+            >
+              Order History
             </button>
           </div>
         </div>

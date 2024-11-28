@@ -19,6 +19,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Login from './components/Client Portal/Login';
 import Register from './components/Client Portal/Register';
 import Profile from './components/Client Portal/Profile';
+import OrderHistory from './components/Client Portal/OrderHistory';
 import UpdateProfile from './components/Client Portal/UpdateProfile';
 import ForgetPassword from './components/Client Portal/ForgetPassword';
 import ResetPassword from './components/Client Portal/ResetPassword';
@@ -50,6 +51,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/OrderHistory" element={<OrderHistory />} />
                 <Route path="/update-profile" element={<UpdateProfile />} />
                 <Route path="/forgetpassword" element={<ForgetPassword />} />
                 <Route path="/resetpassword" element={<ResetPassword />} />
@@ -74,7 +76,7 @@ function App() {
                   element={
                     <PrivateRoute requiredRole="admin">
                       <MainLayout />
-                   </PrivateRoute>
+                    </PrivateRoute>
                   }>
                   <Route index element={<Dashboard />} />
                   <Route path="Orders" element={<Orders />} />

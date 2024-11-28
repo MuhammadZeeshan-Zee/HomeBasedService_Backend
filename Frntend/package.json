@@ -39,6 +39,7 @@
     "react-toastify": "^10.0.5",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
+    "swiper": "^11.1.15",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },

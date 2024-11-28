@@ -4,6 +4,9 @@ import axios from "axios";
 import Hero from "../../common/Hero";
 import BlogImage from "../../assests/images/headerimg.jpg";
 import Footer from "../../common/Footer";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function Ourcleaning() {
   const [services, setServices] = useState([]); // State for storing services data
@@ -46,6 +49,33 @@ function Ourcleaning() {
     },
   ];
 
+  // Slider settings
+  const sliderSettings = {
+    dots: false, // Enable dots navigation
+    infinite: true, // Infinite scrolling
+    speed: 500, // Transition speed
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 2000, // Time between slide transitions (in milliseconds)
+    slidesToShow: 3, // Number of slides to show at once
+    slidesToScroll: 1, // Number of slides to scroll at once
+    responsive: [
+      {
+        breakpoint: 1024, // Tablet breakpoint
+        settings: {
+          slidesToShow: 2, // Show 2 slides on tablets
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768, // Mobile breakpoint
+        settings: {
+          slidesToShow: 1, // Show 1 slide on mobile
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <Hero text="Home Services in" text1="Gujranwala" image={BlogImage} />
@@ -63,9 +93,9 @@ function Ourcleaning() {
           </p>
         </div>
 
-        {/* Services Section */}
+        {/* Services Section - Using React Slick */}
         <div className="mt-10 w-full px-4">
-          <div className="flex flex-wrap justify-center">
+          <Slider {...sliderSettings}>
             {services.map((service, index) => (
               <div className="w-full md:w-1/3 p-4" key={index}>
                 <div className="flex flex-col h-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md mx-auto">
@@ -82,7 +112,7 @@ function Ourcleaning() {
                       {service.description}
                     </p>
                     <Link to="/book">
-                      <button className="bbg-transparent text-[#ED5521] font-bold py-2 px-4 rounded mt-6 border border-[#ED5521] hover:bg-[#ED5521] hover:text-white">
+                      <button className="bg-transparent text-[#ED5521] font-bold py-2 px-4 rounded mt-6 border border-[#ED5521] hover:bg-[#ED5521] hover:text-white">
                         Book Now
                       </button>
                     </Link>
@@ -90,7 +120,7 @@ function Ourcleaning() {
                 </div>
               </div>
             ))}
-          </div>
+          </Slider>
         </div>
 
         {/* Meet Our Team Section */}
