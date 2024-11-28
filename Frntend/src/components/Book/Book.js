@@ -104,6 +104,8 @@ function Book() {
         address: "",
         mapAddress: "",
       });
+      // Navigate to the "Thanks" page
+      navigate("/thanks");
     } catch (error) {
       console.error("Error booking:", error);
       message.error("The Order Not Booked. Try Again");

@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Ourcleaning from './components/Our Cleaning/Ourcleaning';
 import Book from './components/Book/Book';
+import Thanks from './components/Book/Thanks';
 import Colony from './components/Services Area/Colony';
 import Town from './components/Services Area/Town';
 import Ghakhar from './components/Services Area/Ghakhar';
@@ -57,6 +58,7 @@ function App() {
 
                 <Route path="/*" element={<NotLogin />} />
                 <Route path="/Book" element={<Book />} />
+                <Route path="/thanks" element={<Thanks />} />
 
                 <Route path="/colony" element={<Colony />} />
                 <Route path="/Town" element={<Town />} />
