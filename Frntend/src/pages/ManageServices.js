@@ -80,12 +80,12 @@ const ManageServices = () => {
                 if (editingService) {
                     // Update service API call
                     await axios.put(
-                        `https://home-based-service-backend.vercel.app/service/updateService/${editingService._id}`,
+                        `http://localhost:4000/service/updateService/${editingService._id}`,
                         formData);
                     message.success('Service updated successfully');
                 } else {
                     // Add service API call
-                    await axios.post('https://home-based-service-backend.vercel.app/service/addService',formData);
+                    await axios.post('http://localhost:4000/service/addService',formData);
                     message.success('Service added successfully');
                 }
                 fetchServices();
