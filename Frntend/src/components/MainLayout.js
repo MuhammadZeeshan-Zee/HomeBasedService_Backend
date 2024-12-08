@@ -80,6 +80,9 @@ const MainLayout = () => {
                 {
                   key: "ManageServices",
                   label: "Manage Services",
+                }, {
+                  key: "revenue",
+                  label: "Revenue",
                 },
               ],
             },

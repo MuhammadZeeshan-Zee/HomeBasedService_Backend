@@ -1,5 +1,4 @@
 import Hero from "../../common/Hero";
-
 import axios from "axios";
 import { message, Spin, Modal } from "antd"; // Import Modal for video and service charge popup
 import BlogImage from "../../assests/images/blog.jpg";
@@ -10,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 
 function Book() {
+  
   const navigate = useNavigate();
   const userExist = localStorage.getItem("auth");
   const [user, setUser] = useState(false);
@@ -29,6 +29,35 @@ function Book() {
     address: "",
     mapAddress: "",
   });
+
+  // State for dynamically fetched services
+  const [services, setServices] = useState([]); // Ensure this is initialized as an empty array
+
+  useEffect(() => {
+    if (!userExist) {
+      navigate("/login");
+    } else {
+      setUser(true);
+    }
+
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get("https://home-based-service-backend.vercel.app/service/readAllService");
+        console.log("API Response:", response.data.data.services[0].name); // Log the entire response
+        if (Array.isArray(response.data.data.services)) {
+          setServices(response.data.data.services);  // Ensure we are setting an array to services
+        } else {
+          message.error("Unexpected response format from API.");
+        }
+      } catch (error) {
+        console.error("Error fetching services:", error);
+        message.error("Failed to load services.");
+      }
+    };
+
+    fetchServices();
+  }, [userExist, navigate]);
+  console.log("services", services);
 
   const handleChange = (e) => {
     setFormData({
@@ -115,16 +144,9 @@ function Book() {
     }
   };
 
-  useEffect(() => {
-    if (!userExist) {
-      navigate("/login");
-    } else {
-      setUser(true);
-    }
-  }, [userExist, navigate]);
-
   if (!user) return null;
 
+  
   return (
     <>
       <Hero text="Book" text1="Services Now" image={BlogImage} />
@@ -149,8 +171,6 @@ function Book() {
           A compulsory service charge of <strong>200-RS</strong> will be added to your booking.
         </p>
       </Modal>
-
-
 
       <div className="flex-1 flex items-center justify-center p-4 sm:p-8">
         <div id="Request-a-quote" className="w-full max-w-lg mx-auto">
@@ -221,7 +241,7 @@ function Book() {
               </div>
             </div>
 
-            {/* Service Selection */}
+            {/* Service Selection (Dynamically populated) */}
             <div className="flex flex-col mb-4">
               <label htmlFor="serviceName">Services *</label>
               <select
@@ -232,13 +252,15 @@ function Book() {
                 onChange={handleChange}
                 value={formData.serviceName}
               >
-                <option value="" disabled>Select services</option>
-                <option value="Paint Services">Paint Services</option>
-                <option value="House Cleaning Service">House Cleaning Service</option>
-                <option value="Electrician Service">Electrician Service</option>
-                <option value="Plumber Services">Plumber Services</option>
-                <option value="AC/Fridge Services">AC/Fridge Services</option>
-                <option value="Carpet Cleaning Services">Carpet Cleaning Services</option>
+                <option value="" disabled>Select services</option>  
+                { 
+                  services.map((services) => (
+                    <option key={services.id} value={services.name}>
+                      {services.name}
+                    </option>
+                   
+                  ))
+               }
               </select>
             </div>
 
@@ -273,25 +295,23 @@ function Book() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-4">
-              <div className="flex flex-col">
-                <label htmlFor="address" className="mb-2">
-                  Address *
-                </label>
-                <input
-                  className="form-input w-full p-2 border border-gray-300 rounded"
-                  maxLength="256"
-                  name="address"
-                  placeholder="Address"
-                  type="text"
-                  id="address"
-                  required
-                  onChange={handleChange}
-                  value={formData.address}
-                />
-              </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="address" className="mb-2">Address *</label>
+              <input
+                className="form-input w-full p-2 border border-gray-300 rounded"
+                maxLength="256"
+                name="address"
+                placeholder="Address"
+                type="text"
+                id="address"
+                required
+                onChange={handleChange}
+                value={formData.address}
+              />
             </div>
 
+            {/* Map Address */}
             <div className="flex flex-col">
               <label htmlFor="mapAddress" className="mb-2">Map Address *</label>
               <div className="flex">
@@ -309,7 +329,6 @@ function Book() {
                   className="bg-[#FF0000] text-white px-3 py-1 rounded ml-2 flex items-center"
                 >
                   <FontAwesomeIcon icon={faLocationArrow} className="mr-2" />
-
                 </button>
               </div>
               {mapAddressError && (
@@ -317,7 +336,7 @@ function Book() {
               )}
             </div>
 
-            {/* Submit Button with Loader */}
+            {/* Submit Button */}
             <div className="p-2">
               <button
                 type="submit"
@@ -327,11 +346,9 @@ function Book() {
                 {loading ? <Spin /> : "Send"}
               </button>
             </div>
-
           </form>
         </div>
       </div>
-
 
       {/* Video Modal */}
       <Modal
@@ -359,11 +376,8 @@ function Book() {
           Watch how to fill data correctly
         </button>
       </div>
+
       <Footer />
-
-
-
-      {/* Video Modal */}
     </>
   );
 }

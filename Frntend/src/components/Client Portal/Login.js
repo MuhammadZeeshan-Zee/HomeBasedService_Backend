@@ -85,7 +85,7 @@ const Login = () => {
     } catch (error) {
       setLoading(false);
       console.error("Error during login:", error);
-      message.error("An error occurred during login, please try again");
+      message.error("Invalid Credentials");
     }
   };
 

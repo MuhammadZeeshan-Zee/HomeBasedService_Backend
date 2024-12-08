@@ -44,7 +44,7 @@ import ServiceRoute from "./route/service.route.js";
 //declaration routes
 createAdmin();
 app.use("/user", UserRoute);
-app.use("/user", BookRoute);
+app.use("/user", BookRoute);  
 app.use("/employee", EmployeeRoute);
 app.use("/service", ServiceRoute);
 export { app };

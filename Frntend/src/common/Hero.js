@@ -48,9 +48,11 @@ function Hero({ text, text1, image }) {
   const serviceArea = [{ name: 'Dc Colony', url: '/colony' }, { name: 'Model Town', url: '/town' }, { name: 'Ghakhar', url: '/Ghakhar' }, { name: 'Satellite Town', url: '/sattelite' },]
   const aboutSection = [{ name: 'FAQs', url: '/faq' }, { name: 'Blog', url: '/blog' }, { name: 'Terms', url: '/termsandconditions' }]
   const clientSection = [
-    user ? { name: 'Book Now', url: '/book' } : { name: 'Login', url: '/login' },
-    user ? { name: 'Logout', url: '/' } : { name: 'Register', url: '/register' },
-  ];
+    user ? { name: "Book Now", url: "/book" } : { name: "Login", url: "/login" },
+    user && { name: "Feedback", url: "/feedback" }, // Add Feedback route if logged in
+    user ? { name: "Logout", url: "/" } : { name: "Register", url: "/register" },
+  ].filter(Boolean); // Remove undefined entries if user is not logged in
+
   console.log('uservalue', user);
   const getUserDeatils = async () => {
     const res = await axios.get(
@@ -134,7 +136,7 @@ function Hero({ text, text1, image }) {
                     </div>
 
                     <div className="relative group">
-                      <button className="text-lg font-semibold hover:text-black text-white px-3 py-2 rounded-md flex items-center ">
+                      <button className="text-lg font-semibold hover:text-black text-white px-3 py-2 rounded-md flex items-center">
                         Client Portal
                         <svg
                           className="ml-2 h-5 w-5"
@@ -155,18 +157,23 @@ function Hero({ text, text1, image }) {
                       <div className="absolute top-8 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden group-hover:block">
                         {user ? (
                           <>
+                            <Link to="/book">
+                              <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+                                Book Now
+                              </p>
+                            </Link>
+                            <Link to="/feedback">
+                              <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+                                Feedback
+                              </p>
+                            </Link>
                             <p
                               onClick={handleLogout}
                               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
                             >
                               Logout
                             </p>
-                            <Link to="/book">
-                              <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
-                                Book Now
-                              </p>
-                            </Link></>
-
+                          </>
                         ) : (
                           <>
                             <Link to="/login">
@@ -181,9 +188,10 @@ function Hero({ text, text1, image }) {
                             </Link>
                           </>
                         )}
-
                       </div>
                     </div>
+
+                    
                   </div>
                 </div>
               </div>

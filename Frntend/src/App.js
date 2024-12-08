@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Ourcleaning from './components/Our Cleaning/Ourcleaning';
 import Book from './components/Book/Book';
+import MapWithCurrentLocation from './components/Book/MapWithCurrentLocation';
 import Thanks from './components/Book/Thanks';
 import Colony from './components/Services Area/Colony';
 import Town from './components/Services Area/Town';
@@ -11,6 +12,7 @@ import Ghakhar from './components/Services Area/Ghakhar';
 import Sattelite from './components/Services Area/Sattelite';
 import FAQComponent from './components/About/FAQComponent';
 import Verify from './components/Client Portal/Verify';
+import Feedback from './components/Client Portal/Feedback';
 import Blog from './components/About/Blog';
 import TermsAndConditions from './components/About/TermsAndConditions';
 // In your index.js or App.js
@@ -30,6 +32,7 @@ import Orders from './pages/Orders';
 import Customers from './pages/Customers';
 import Employees from './pages/Employees';
 import ManageServices from './pages/ManageServices';
+import Revenue from './pages/Revenue';
 import UserContextProvider from './components/Context/UserContextProvider';
 import PrivateRoute from './components/PrivateRoute';
 import { Provider } from 'react-redux';
@@ -49,6 +52,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Ourcleaning />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/feedback" element={<Feedback />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/OrderHistory" element={<OrderHistory />} />
@@ -60,6 +64,7 @@ function App() {
 
                 <Route path="/*" element={<NotLogin />} />
                 <Route path="/Book" element={<Book />} />
+                <Route path="/MapWithCurrentLocation" element={<MapWithCurrentLocation />} />
                 <Route path="/thanks" element={<Thanks />} />
 
                 <Route path="/colony" element={<Colony />} />
@@ -83,6 +88,7 @@ function App() {
                   <Route path="customers" element={<Customers />} />
                   <Route path="Employees" element={<Employees />} />
                   <Route path="ManageServices" element={<ManageServices />} />
+                  <Route path="revenue" element={<Revenue/>} />
                 </Route>
               </Routes>
             </BrowserRouter>

@@ -144,6 +144,15 @@ const Dashboard = () => {
             {count.customer}
           </div>
         </div>
+
+        {/* Revenue Card */}
+        <div className="bg-gray-100 p-10 rounded-lg shadow-md text-center hover:bg-gray-200 transition duration-300 cursor-pointer">
+          <i className="fas fa-dollar-sign text-5xl mb-4 text-purple-500"></i>
+          <div className="text-2xl mb-2">Revenue</div>
+          <div className="text-3xl font-semibold text-gray-700 mt-4">
+            {/* ${count.revenue.toLocaleString()} */}
+          </div>
+        </div>
       </div>
 
       {/* Pie and Histogram Charts */}
@@ -168,6 +177,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      
     </div>
   );
 

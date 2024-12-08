@@ -52,7 +52,7 @@ const Register = () => {
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
-      message.error("An error occurred while sending the OTP. Please try again.");
+      message.error("Email Already Exist.");
     } finally {
       setLoadingOtp(false);
     }
