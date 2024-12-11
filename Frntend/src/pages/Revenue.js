@@ -64,6 +64,20 @@ const Revenue = () => {
         setCalculatorInput(""); // Clear input field
     };
 
+    // Calculate the amount after cutting 30% for each category
+    const amountAfterCutting30 = revenueBreakdown.length
+        ? revenueBreakdown.map((item) => ({
+            category: item.category,
+            amountAfterCut: item.amount * 0.7, // Apply 30% cut
+        }))
+        : [];
+
+    // Calculate total amount after cutting 30%
+    const totalAmountAfterCut = amountAfterCutting30.reduce(
+        (total, item) => total + item.amountAfterCut,
+        0
+    );
+
     const chartData = {
         labels: revenueBreakdown.map((item) => item.category), // Example: ['Service A', 'Service B']
         datasets: [
@@ -71,6 +85,12 @@ const Revenue = () => {
                 label: "Revenue",
                 data: revenueBreakdown.map((item) => item.amount), // Example: [1000, 2000]
                 backgroundColor: "#4CAF50",
+                borderWidth: 1,
+            },
+            {
+                label: "Amount After Cutting 30%",
+                data: amountAfterCutting30.map((item) => item.amountAfterCut), // Example: [700, 1400]
+                backgroundColor: "#FF5722",
                 borderWidth: 1,
             },
         ],
@@ -105,7 +125,15 @@ const Revenue = () => {
                 </p>
             </div>
 
-            {/* Calculator Section */}
+            {/* Amount After Cutting 30% Card */}
+            <div className="bg-blue-100 p-6 rounded-lg shadow-md mb-6">
+                <h4 className="text-xl font-semibold">Amount After Cutting 30%</h4>
+                <p className="text-3xl font-semibold text-blue-700 mt-2">
+                    PKR: {totalAmountAfterCut.toLocaleString() || 0}
+                </p>
+            </div>
+
+            {/* Revenue Calculator Section */}
             <div className="bg-gray-50 p-6 rounded-lg shadow-md mb-6">
                 <h4 className="text-xl font-semibold mb-4">Revenue Calculator</h4>
                 <div className="flex flex-col space-y-4">
@@ -151,6 +179,11 @@ const Revenue = () => {
                 ) : (
                     <p>No adjustments made yet.</p>
                 )}
+            </div>
+
+            {/* Revenue Chart */}
+            <div className="mt-8">
+                <Bar data={chartData} options={chartOptions} />
             </div>
         </div>
     );

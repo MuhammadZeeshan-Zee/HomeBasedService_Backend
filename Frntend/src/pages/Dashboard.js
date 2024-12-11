@@ -39,6 +39,7 @@ const Dashboard = () => {
   useEffect(() => {
     getData();
     // getEmployedata();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const getData = async () => {
     try {

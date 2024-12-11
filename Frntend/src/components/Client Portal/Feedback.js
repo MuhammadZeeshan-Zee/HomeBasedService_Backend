@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { message, Rate } from "antd";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+
 
 const Feedback = () => {
   const userExist = localStorage.getItem("auth");
+  // eslint-disable-next-line no-unused-vars
   const userData = userExist ? JSON.parse(userExist) : null;
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   const [feedbackData, setFeedbackData] = useState({
-    
-    totalCharges: "", // New field for Total Charges
+    totalCharges: "",
     rating: 0,
     feedback: "",
   });
@@ -33,12 +36,7 @@ const Feedback = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-     
-      !feedbackData.totalCharges || // Validate Total Charges field
-      !feedbackData.feedback ||
-      feedbackData.rating === 0
-    ) {
+    if (!feedbackData.totalCharges || !feedbackData.feedback || feedbackData.rating === 0) {
       message.error("All fields are required.");
       return;
     }
@@ -51,7 +49,7 @@ const Feedback = () => {
       const token = authObject?.accessToken;
 
       const response = await axios.post(
-        "https://your-backend-endpoint/feedback",
+        "http://localhost:4000/feedback/",  // Direct API endpoint for updating feedback
         feedbackData,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -61,19 +59,20 @@ const Feedback = () => {
       setLoading(false);
 
       if (response.data.success) {
-        message.success("Feedback submitted successfully!");
+        message.success("Feedback updated successfully!");
         setFeedbackData({
-        
-          totalCharges: "", // Reset Total Charges field
+          totalCharges: "",
           rating: 0,
           feedback: "",
         });
+        // Navigate to the /home page after successful feedback submission
+        navigate("/");
       } else {
-        message.error("Failed to submit feedback. Please try again.");
+        message.error("Failed to update feedback. Please try again.");
       }
     } catch (error) {
       setLoading(false);
-      console.error("Error submitting feedback:", error);
+      console.error("Error updating feedback:", error);
       message.error("Something went wrong. Please try again.");
     }
   };
@@ -83,9 +82,6 @@ const Feedback = () => {
       <div className="max-w-lg mx-auto my-5 p-4 border border-gray-300 rounded-md shadow-md">
         <h2 className="text-center text-xl mb-4 text-gray-800">Customer Feedback</h2>
         <form onSubmit={handleSubmit}>
-      
-
-          {/* Total Charges */}
           <div className="mb-3">
             <label className="block text-gray-700 text-sm mb-1">Total Charges</label>
             <input
@@ -98,7 +94,6 @@ const Feedback = () => {
             />
           </div>
 
-          {/* Rating */}
           <div className="mb-3">
             <label className="block text-gray-700 text-sm mb-1">Star Rating</label>
             <Rate
@@ -108,7 +103,6 @@ const Feedback = () => {
             />
           </div>
 
-          {/* Feedback */}
           <div className="mb-3">
             <label className="block text-gray-700 text-sm mb-1">Feedback</label>
             <textarea
@@ -116,15 +110,16 @@ const Feedback = () => {
               value={feedbackData.feedback}
               onChange={handleChange}
               className="w-full px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-              placeholder="Regarding to service provider and Total charges "
+              placeholder="Share your thoughts on the service"
               rows="3"
             ></textarea>
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 bg-red-500 text-white rounded-md"
+            className={`w-full py-2 rounded-md text-white ${loading ? "bg-gray-400" : "bg-red-500"
+              }`}
+            disabled={loading}
           >
             {loading ? "Submitting..." : "Submit Feedback"}
           </button>

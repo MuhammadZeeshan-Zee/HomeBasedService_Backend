@@ -7,7 +7,6 @@ import { FaBook } from "react-icons/fa";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 
-
 const { Option } = Select;
 const { Search } = Input;
 
@@ -84,49 +83,35 @@ const Orders = () => {
       );
 
       message.success("Status updated successfully");
-
-      // Send feedback email if status is 'Completed' this one
-  //     if (value === "Completed") {
-  //       const order = updatedData.find((item) => item.key === key);
-  //       await axios.post(
-  //         `https://home-based-service-backend.vercel.app/user/sendFeedbackEmail`,
-  //         { orderId: key, userEmail: order.email },
-  //         { headers: { Authorization: `Bearer ${token}` } }
-  //       );
-  //       message.success("Feedback email sent to the user.");
-  //     }
-    }
-    catch (error) {
+    } catch (error) {
       message.error("Failed to update status or send feedback email.");
       console.error("Error:", error);
     }
   };
 
-
   const handleFeedbackClick = async (orderId) => {
     try {
-      setLoading(true); // Optional: Show a loading state
+      setLoading(true); // Show loading state while fetching feedback
 
-      // Simulated feedback data for testing
-      const mockFeedbackData = {
-        Name: "John Doe",
-        Email: "exm@gmail.com",
-        Phone: "03177190178",
-        serviceName: "Plumbing",
-        totalCharges: "$150",
-        rating: 4,
-        feedback: "The service was quick and efficient.",
-        date: "2024-12-05",
-      };
+      // Fetch feedback for the specific order using GET request
+      const response = await axios.get(
+        `http://localhost:4000/feedback/${orderId}`, // Use orderId in the API request
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pass token for authentication
+          },
+        }
+      );
 
-      // Simulating API behavior
-      if (!mockFeedbackData) {
+      const feedbackData = response.data.feedback;
+
+      if (!feedbackData) {
         message.info("No feedback provided for this order.");
         return;
       }
 
-      setSelectedFeedback(mockFeedbackData); // Set the mock data
-      setIsModalVisible(true);
+      setSelectedFeedback(feedbackData); // Set the feedback data
+      setIsModalVisible(true); // Show modal with feedback
     } catch (error) {
       console.error("Error fetching feedback:", error);
       message.error("Failed to fetch feedback. Please try again later.");
@@ -134,7 +119,6 @@ const Orders = () => {
       setLoading(false);
     }
   };
-
 
 
   const columns = [
@@ -206,7 +190,7 @@ const Orders = () => {
             }}
             title="View Feedback"
           />
-        ) : null, // Render nothing if status is not "Completed"
+        ) : null,
     },
 
     {
@@ -232,7 +216,6 @@ const Orders = () => {
       ),
     },
   ];
-
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
@@ -270,7 +253,6 @@ const Orders = () => {
           centered
         >
           {selectedFeedback && (
-
             <div style={{ padding: "20px", fontFamily: "Arial, sans-serif", lineHeight: "1.6" }}>
               {/* Header */}
               <div
@@ -314,19 +296,17 @@ const Orders = () => {
               </div>
 
               {/* Close Button */}
-              <div style={{ textAlign: "center", marginTop: "20px" }}>
+              <div style={{ marginTop: "20px", textAlign: "center" }}>
                 <button
-                  style={{
-                    padding: "10px 20px",
-                    backgroundColor: "#1890ff",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    fontWeight: "bold",
-                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-                  }}
                   onClick={() => setIsModalVisible(false)}
+                  style={{
+                    backgroundColor: "#1890ff",
+                    color: "#fff",
+                    padding: "10px 20px",
+                    borderRadius: "6px",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
                 >
                   Close
                 </button>
@@ -334,8 +314,6 @@ const Orders = () => {
             </div>
           )}
         </Modal>
-
-
       </div>
     </div>
   );
